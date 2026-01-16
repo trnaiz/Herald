@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#00000000"
     android:backgroundTint="#00000000"
@@ -12,43 +12,50 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="@android:style/Widget.Material.ProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:indeterminate="false" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="86dp"
+            android:id="@+id/buttonRefresh"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.1"
-            app:srcCompat="@drawable/refresh" />
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:scaleType="center"
+            android:src="@drawable/baseline_refresh_24" />
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="74dp"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <ToggleButton
-            android:id="@+id/toggleButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="ToggleButton" />
+            app:srcCompat="@drawable/baseline_search_24" />
 
-        <ToggleButton
-            android:id="@+id/toggleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="ToggleButton" />
+            app:srcCompat="@drawable/settings_cog_wheel" />
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
