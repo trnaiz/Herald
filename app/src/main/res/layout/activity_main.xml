@@ -13,12 +13,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/progress_circular_indeterminate"
+            android:id="@+id/progressWheel"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:indeterminate="false"
-            android:max="100"
-            android:progress="95"
+            android:max="10000"
+            android:progress="0"
             app:indicatorColor="#000000"
             app:indicatorSize="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +26,8 @@
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:trackThickness="16dp" />
+            app:trackThickness="16dp"
+            app:trackColor="#33000000" />
 
         <ImageButton
             android:id="@+id/refreshButton"
@@ -38,7 +39,7 @@
             android:src="@drawable/refresh"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/appLogo"
-            app:layout_constraintStart_toEndOf="@+id/progress_circular_indeterminate"
+            app:layout_constraintStart_toEndOf="@+id/progressWheel"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.imageview.ShapeableImageView

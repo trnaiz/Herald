@@ -1,5 +1,8 @@
 package com.example.herald;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,20 +15,29 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.progressindicator.CircularProgressIndicator;
+
 public class MainActivity extends AppCompatActivity {
+
+    protected ImageButton refreshButton;
+    protected TextView testInputButton;
+    protected CircularProgressIndicator progressIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageButton refreshBtn = findViewById(R.id.refreshButton);
-        TextView testInputButton = findViewById(R.id.testInputButton);
-        refreshBtn.setOnClickListener(new View.OnClickListener() {
+        refreshButton = findViewById(R.id.refreshButton);
+        testInputButton = findViewById(R.id.testInputButton);
+        progressIndicator = findViewById(R.id.progressWheel);
+
+        API.autoRefreshAPI(this);
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                API test = new API();
-                test.refreshAPI(testInputButton);
+                API.refreshAllAPI(MainActivity.this);
             }
         });
     }
