@@ -61,6 +61,7 @@
             android:src="@drawable/search_loop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/settingsButton"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/appLogo"
             app:layout_constraintTop_toTopOf="parent" />
 
