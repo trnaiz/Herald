@@ -17,14 +17,15 @@
             android:layout_height="48dp"
             android:indeterminate="false"
             android:max="100"
-            android:progress="100"
+            android:progress="95"
+            app:indicatorColor="#000000"
             app:indicatorSize="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/refreshButton"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:trackThickness="4dp" />
+            app:trackThickness="16dp" />
 
         <ImageButton
             android:id="@+id/refreshButton"
