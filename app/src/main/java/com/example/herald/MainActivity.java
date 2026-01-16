@@ -1,5 +1,6 @@
 package com.example.herald;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -27,5 +28,18 @@ public class MainActivity extends AppCompatActivity {
                 test.refreshAPI(testInputButton);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkConnection();
+    }
+
+    private void checkConnection() {
+        if (!NetworkCheck.isNetworkAvailable(this)) {
+            Intent intent = new Intent(MainActivity.this, NoInternetActivity.class);
+            startActivity(intent);
+        }
     }
 }
