@@ -44,13 +44,12 @@
             android:id="@+id/appLogo"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="#E0E0E0"
-            android:src="@tools:sample/avatars"
+            android:background="#00E0E0E0"
+            android:src="@mipmap/ic_launcher_foreground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/searchButton"
             app:layout_constraintStart_toEndOf="@+id/refreshButton"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/searchButton"
