@@ -1,6 +1,7 @@
 package com.example.herald;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -27,12 +28,17 @@ public class NetworkCheck {
                         (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
                                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
                                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET));
-            } else {
-                // Pour les anciennes versions d'Android (Legacy)
-                android.net.NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-                return activeNetworkInfo != null && activeNetworkInfo.isConnected();
             }
         }
         return false;
+    }
+
+    public static boolean checkConnection(Context context) {
+        if (!isNetworkAvailable(context)) {
+            Intent intent = new Intent(context, NoInternetActivity.class);
+            context.startActivity(intent);
+            return false;
+        }
+        return true;
     }
 }

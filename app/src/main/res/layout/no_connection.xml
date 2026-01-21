@@ -45,10 +45,14 @@
                 android:layout_height="33dp" />
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="185dp"
+                android:layout_height="137dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@android:drawable/ic_dialog_alert" />
+                android:src="@drawable/network_wireless_no_route" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="17dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -93,8 +97,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="#4FBBE7"
                 android:text="Réessayer"
-                android:textColorLink="#FF1B1B" />
+                android:textColorLink="#FF1B1B"
+                app:rippleColor="#00BCD4" />
         </LinearLayout>
 
     </LinearLayout>

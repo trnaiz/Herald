@@ -12,6 +12,9 @@ import java.lang.Thread;
 
 public class API {
     public static void refreshAllAPI(MainActivity mainActivity) {
+        if (!NetworkCheck.checkConnection(mainActivity)) {
+            return;
+        }
         mainActivity.testInputButton.setText("Helloo");
         Toast.makeText(mainActivity, "Statut des APIs actualisé", Toast.LENGTH_SHORT).show();
     }
@@ -30,7 +33,6 @@ public class API {
         });
 
         animation.start();
-
     }
     public void callAPI(MainActivity mainActivity, String urlString) {
         new Thread(() -> {
