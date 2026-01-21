@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
         API.autoRefreshAPI(this);
 
+        API github = new API();
+        github.callAPI(MainActivity.this, "https://www.githubstatus.com/api/v2/status.json");
+
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

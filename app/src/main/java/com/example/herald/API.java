@@ -6,6 +6,9 @@ import android.animation.ObjectAnimator;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.net.*;
+import java.io.*;
+import java.lang.Thread;
 
 public class API {
     public static void refreshAllAPI(MainActivity mainActivity) {
@@ -29,4 +32,22 @@ public class API {
         animation.start();
 
     }
+    public void callAPI(MainActivity mainActivity, String urlString) {
+        new Thread(() -> {
+            try {
+                URL url = new URL(urlString);
+                URLConnection apiConnection = url.openConnection();
+                BufferedReader in = new BufferedReader(new InputStreamReader(apiConnection.getInputStream()));
+                String apiResponse = in.readLine();
+                TextView apiResponseText = mainActivity.findViewById(R.id.testAPI);
+                apiResponseText.setText(apiResponse);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
 }
+
+
