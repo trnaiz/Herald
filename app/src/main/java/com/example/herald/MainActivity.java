@@ -58,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void refreshAllAPI() {
+        if (!NetworkCheck.checkConnection(this)) {
+            if (animation != null) {
+                animation.removeAllListeners();
+                animation.cancel();
+            }
+            return;
+        }
         this.testInputButton.setText("Helloo");
         Toast.makeText(this, "Statut des APIs actualisé", Toast.LENGTH_SHORT).show();
     }
