@@ -1,5 +1,8 @@
 package com.example.herald.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.Instant;
 import java.time.LocalDate;
 
@@ -9,7 +12,7 @@ public class StatusPage {
     private String name;
     private String url;
     private String timeZone;
-    private LocalDate updatedAt;
+    private String updatedAt;
 
     public String getId() {
         return id;
@@ -43,11 +46,11 @@ public class StatusPage {
         this.timeZone = timeZone;
     }
 
-    public LocalDate getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDate updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

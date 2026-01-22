@@ -4,8 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.herald.dto.APIStatusResponse;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
+import java.time.LocalDate;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,19 +38,9 @@ public class MainActivity extends AppCompatActivity {
         progressIndicator = findViewById(R.id.progressWheel);
         testAPI = findViewById(R.id.testAPI);
 
-
-//        #### WE NEED TO MAKE IT ASYNC, RIGHT NOW IT CRASHES INSTANTLY WHEN TRYING TO CALL API
-
-//        APIService apiService = new APIService();
-//        try {
-//            APIStatusResponse github = apiService.getStatus("https://www.githubstatus.com/api/v2/status.json").get();
-//            testAPI.setText(github.getPage().getName());
-//
-//        } catch (ExecutionException e) {
-//            throw new RuntimeException(e);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
+        createAPIInterface("https://www.githubstatus.com/api/v2/status.json");
+        createAPIInterface("https://www.cloudflarestatus.com/api/v2/status.json");
+        createAPIInterface("https://status.openai.com/api/v2/status.json");
 
         autoRefreshAPI();
 
@@ -88,6 +82,55 @@ public class MainActivity extends AppCompatActivity {
 
        animation.start();
 
+   }
+
+    /**
+     * Creates a TextView with the given text and center it
+     *
+     * @param text The text to display
+     * @return The created TextView
+     */
+   public TextView createCenteredTextView(String text) {
+       LinearLayout.LayoutParams sameSpreadParams = new LinearLayout.LayoutParams(
+               0,
+               LinearLayout.LayoutParams.MATCH_PARENT,
+               1.0f
+       );
+
+       TextView textView = new TextView(this);
+       textView.setLayoutParams(sameSpreadParams);
+       textView.setGravity(Gravity.CENTER);
+       textView.setText(text);
+
+       return textView;
+   }
+
+    /**
+     * Creates an interface for the API given in the url
+     * @param url The url of the chosen API Status
+     */
+   public void createAPIInterface(String url) {
+       try {
+           CompletableFuture<APIStatusResponse> github = APIService.getInstance().getStatus(url);
+           github.thenAccept(response -> {
+               runOnUiThread(() -> {
+                   LinearLayout linearContainer = findViewById(R.id.globalLinearLayout);
+                   LinearLayout apiLinearContainer = new LinearLayout(this);
+                   apiLinearContainer.setOrientation(LinearLayout.HORIZONTAL);
+                   apiLinearContainer.setGravity(Gravity.CENTER);
+
+                   TextView textName = createCenteredTextView(response.getPage().getName());
+                   TextView textDescription = createCenteredTextView(response.getStatus().getDescription());
+                   TextView textUpdatedAt = createCenteredTextView(response.getPage().getUpdatedAt());
+                   linearContainer.addView(apiLinearContainer);
+                   apiLinearContainer.addView(textName);
+                   apiLinearContainer.addView(textDescription);
+                   apiLinearContainer.addView(textUpdatedAt);
+               });
+           });
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
    }
 
     @Override
