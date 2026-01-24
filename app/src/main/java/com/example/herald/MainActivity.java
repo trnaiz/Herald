@@ -7,18 +7,18 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.herald.dto.APIStatusResponse;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
-import java.time.LocalDate;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -120,12 +120,16 @@ public class MainActivity extends AppCompatActivity {
                    apiLinearContainer.setGravity(Gravity.CENTER);
 
                    TextView textName = createCenteredTextView(response.getPage().getName());
-                   TextView textDescription = createCenteredTextView(response.getStatus().getDescription());
+//                   TextView textDescription = createCenteredTextView(response.getStatus().getDescription());
                    TextView textUpdatedAt = createCenteredTextView(response.getPage().getUpdatedAt());
+                   ImageView statusCircle = new ImageView(this);
+                   statusCircle.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.circle_green));
                    linearContainer.addView(apiLinearContainer);
                    apiLinearContainer.addView(textName);
-                   apiLinearContainer.addView(textDescription);
+//                   apiLinearContainer.addView(textDescription);
+                   apiLinearContainer.addView(statusCircle);
                    apiLinearContainer.addView(textUpdatedAt);
+
                });
            });
        } catch (Exception e) {
