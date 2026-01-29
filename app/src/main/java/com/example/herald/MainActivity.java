@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -38,15 +39,25 @@ public class MainActivity extends AppCompatActivity {
         progressIndicator = findViewById(R.id.progressWheel);
         testAPI = findViewById(R.id.testAPI);
 
-        createAPIInterface("https://www.githubstatus.com/api/v2/status.json");
-        createAPIInterface("https://www.cloudflarestatus.com/api/v2/status.json");
-        createAPIInterface("https://status.openai.com/api/v2/status.json");
+        APIComponent github = new APIComponent(this, findViewById(R.id.globalLinearLayout), "https://www.githubstatus.com/api/v2/status.json");
+        github.createInterface();
+
+        APIComponent cloudflare = new APIComponent(this, findViewById(R.id.globalLinearLayout), "https://www.cloudflarestatus.com/api/v2/status.json");
+        cloudflare.createInterface();
+
+        APIComponent openai = new APIComponent(this, findViewById(R.id.globalLinearLayout), "https://status.openai.com/api/v2/status.json");
+        openai.createInterface();
+
+//        createAPIInterface("https://www.githubstatus.com/api/v2/status.json");
+//        createAPIInterface("https://www.cloudflarestatus.com/api/v2/status.json");
+//        createAPIInterface("https://status.openai.com/api/v2/status.json");
 
         autoRefreshAPI();
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                openai.refreshInterface();
                 autoRefreshAPI();
             }
         });
