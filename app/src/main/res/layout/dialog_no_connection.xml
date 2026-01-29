@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:maxWidth="120dp"
+        android:maxHeight="90dp"
+        android:src="@drawable/network_wireless_no_route" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Oups !"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Il semble que vous ne soyez pas connecté au réseau."
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Veuillez vérifier votre connexion puis réessayer !"
+        android:textAlignment="center"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btnRetry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#4FBBE7"
+        android:text="Réessayer" />
+
+</LinearLayout>
