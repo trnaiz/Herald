@@ -26,6 +26,12 @@ public class APIComponent {
         this.url = url;
     }
 
+    /**
+     * Creates a TextView with the given text and center it
+     *
+     * @param text The text to display
+     * @return The created TextView
+     */
     public TextView createCenteredTextView(String text) {
         LinearLayout.LayoutParams sameSpreadParams = new LinearLayout.LayoutParams(
                 0,
@@ -39,6 +45,10 @@ public class APIComponent {
         textView.setText(text);
         return textView;
     }
+
+    /**
+     * Creates the GUI for the current APIComponent object
+     */
     public void createInterface() {
         try {
             APIService.getInstance().getStatus(this.url).thenAccept(response -> {

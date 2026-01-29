@@ -131,59 +131,6 @@ public class MainActivity extends AppCompatActivity {
 
    }
 
-    /**
-     * Creates a TextView with the given text and center it
-     *
-     * @param text The text to display
-     * @return The created TextView
-     */
-   public TextView createCenteredTextView(String text) {
-       LinearLayout.LayoutParams sameSpreadParams = new LinearLayout.LayoutParams(
-               0,
-               LinearLayout.LayoutParams.MATCH_PARENT,
-               1.0f
-       );
-
-       TextView textView = new TextView(this);
-       textView.setLayoutParams(sameSpreadParams);
-       textView.setGravity(Gravity.CENTER);
-       textView.setText(text);
-
-       return textView;
-   }
-
-    /**
-     * Creates an interface for the API given in the url
-     * @param url The url of the chosen API Status
-     */
-   public void createAPIInterface(String url) {
-       try {
-           CompletableFuture<APIStatusResponse> github = APIService.getInstance().getStatus(url);
-           github.thenAccept(response -> {
-               runOnUiThread(() -> {
-                   LinearLayout linearContainer = findViewById(R.id.globalLinearLayout);
-                   LinearLayout apiLinearContainer = new LinearLayout(this);
-                   apiLinearContainer.setOrientation(LinearLayout.HORIZONTAL);
-                   apiLinearContainer.setGravity(Gravity.CENTER);
-
-                   TextView textName = createCenteredTextView(response.getPage().getName());
-//                   TextView textDescription = createCenteredTextView(response.getStatus().getDescription());
-                   TextView textUpdatedAt = createCenteredTextView(response.getPage().getUpdatedAt());
-                   ImageView statusCircle = new ImageView(this);
-                   statusCircle.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.circle_green));
-                   linearContainer.addView(apiLinearContainer);
-                   apiLinearContainer.addView(textName);
-//                   apiLinearContainer.addView(textDescription);
-                   apiLinearContainer.addView(statusCircle);
-                   apiLinearContainer.addView(textUpdatedAt);
-
-               });
-           });
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-   }
-
     @Override
     protected void onResume() {
         super.onResume();
