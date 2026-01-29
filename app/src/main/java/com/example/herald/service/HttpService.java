@@ -1,4 +1,4 @@
-package com.example.herald;
+package com.example.herald.service;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;

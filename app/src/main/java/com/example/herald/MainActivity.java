@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
         this.testInputButton.setText("Helloo");
+
         Toast.makeText(this, "Statut des APIs actualisé", Toast.LENGTH_SHORT).show();
         return true;
     }

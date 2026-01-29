@@ -1,4 +1,4 @@
-package com.example.herald;
+package com.example.herald.service;
 
 import com.example.herald.dto.APIStatusResponse;
 

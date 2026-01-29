@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.herald.model.Indicator;
+import com.example.herald.service.APIService;
+
 public class APIComponent {
 
     private Activity activity;
@@ -67,7 +70,7 @@ public class APIComponent {
 //                   TextView textDescription = createCenteredTextView(response.getStatus().getDescription());
                     textUpdatedAt = createCenteredTextView(response.getPage().getUpdatedAt());
                     statusCircle = new ImageView(activity);
-                    statusCircle.setImageDrawable(setColorIndicator(response.getStatus().getIndicator(), activity));
+                    statusCircle.setImageDrawable(getColorIndicator(Indicator.valueOf(response.getStatus().getIndicator().toUpperCase()), activity));
                     parentLayout.addView(apiLinearContainer);
                     apiLinearContainer.addView(textName);
 //                   apiLinearContainer.addView(textDescription);
@@ -80,13 +83,17 @@ public class APIComponent {
         }
     }
 
-    public void refreshInterface(){
+    /**
+     * Refreshes the GUI with the new data for the current APIComponent object
+     */
+
+    public void refreshInterface() {
         try {
             APIService.getInstance().getStatus(this.url).thenAccept(response -> {
                 this.activity.runOnUiThread(() -> {
-                   textName.setText(response.getPage().getName());
-                   textUpdatedAt.setText(response.getPage().getUpdatedAt());
-                   apiLinearContainer.setBackgroundColor(Color.GREEN);
+                    textName.setText(response.getPage().getName());
+                    textUpdatedAt.setText(response.getPage().getUpdatedAt());
+                    apiLinearContainer.setBackgroundColor(Color.GREEN);
                 });
             });
         } catch (Exception e) {
@@ -94,23 +101,21 @@ public class APIComponent {
         }
     }
 
-    public Drawable setColorIndicator(String indicator, Activity activity) {
-        if (indicator.equals("none")) {
-            return ContextCompat.getDrawable(activity, R.drawable.circle_green);
+    public Drawable getColorIndicator(Indicator indicator, Activity activity) {
+        switch (indicator) {
+            case NONE:
+                return ContextCompat.getDrawable(activity, R.drawable.circle_green);
+            case MINOR:
+                return ContextCompat.getDrawable(activity, R.drawable.circle_yellow);
+            case MAJOR:
+                return ContextCompat.getDrawable(activity, R.drawable.circle_orange);
+            case CRITICAL:
+                return ContextCompat.getDrawable(activity, R.drawable.circle_red);
+            case MAINTENANCE:
+                return ContextCompat.getDrawable(activity, R.drawable.circle_blue);
+            default:
+                return ContextCompat.getDrawable(activity, R.drawable.circle_purple);
         }
-        if (indicator.equals("minor")) {
-            return ContextCompat.getDrawable(activity, R.drawable.circle_yellow);
-        }
-        if (indicator.equals("major")) {
-            return ContextCompat.getDrawable(activity, R.drawable.circle_orange);
-        }
-        if (indicator.equals("critical")) {
-            return ContextCompat.getDrawable(activity, R.drawable.circle_red);
-        }
-        if (indicator.equals("maintenance")) {
-            return ContextCompat.getDrawable(activity, R.drawable.circle_blue);
-        }
-        return ContextCompat.getDrawable(activity, R.drawable.circle_purple);
     }
 }
 
