@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected CircularProgressIndicator progressIndicator;
     protected TextView testAPI;
     protected ObjectAnimator animation;
+    private AlertDialog noConnectionDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,36 +65,69 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void refreshAllAPI() {
-        if (!NetworkCheck.checkConnection(this)) {
-            if (animation != null) {
-                animation.removeAllListeners();
-                animation.cancel();
-            }
-            return;
+    /**
+     * Refreshes all API statuses.
+     * @return true if refresh was successful, false if no connection
+     */
+    public boolean refreshAllAPI() {
+        if (!NetworkCheck.isNetworkAvailable(this)) {
+            stopAnimation();
+            showNoConnectionDialog();
+            return false;
         }
         this.testInputButton.setText("Helloo");
         Toast.makeText(this, "Statut des APIs actualisé", Toast.LENGTH_SHORT).show();
+        return true;
     }
 
-   public void autoRefreshAPI() {
+    private void showNoConnectionDialog() {
+        if (noConnectionDialog != null && noConnectionDialog.isShowing()) {
+            return;
+        }
+
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_no_connection, null);
+
+        noConnectionDialog = new AlertDialog.Builder(this)
+                .setView(dialogView)
+                .setCancelable(false)
+                .create();
+
+        dialogView.findViewById(R.id.btnRetry).setOnClickListener(v -> {
+            if (NetworkCheck.isNetworkAvailable(this)) {
+                noConnectionDialog.dismiss();
+                autoRefreshAPI();
+            } else {
+                Toast.makeText(this, "Toujours pas de réseau...", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        noConnectionDialog.show();
+    }
+
+    public void stopAnimation() {
         if (animation != null) {
             animation.removeAllListeners();
             animation.cancel();
+            animation = null;
         }
+    }
 
-       ObjectAnimator animation = ObjectAnimator.ofInt(this.progressIndicator, "progress", 0, 10000);
-       animation.setDuration(30000);
+   public void autoRefreshAPI() {
+        stopAnimation();
 
-       animation.addListener(new AnimatorListenerAdapter() {
+       this.animation = ObjectAnimator.ofInt(this.progressIndicator, "progress", 0, 10000);
+       this.animation.setDuration(30000);
+
+       this.animation.addListener(new AnimatorListenerAdapter() {
            @Override
            public void onAnimationEnd(Animator animation) {
-               refreshAllAPI();
-               autoRefreshAPI();
+               if (refreshAllAPI()) {
+                   autoRefreshAPI();
+               }
            }
        });
 
-       animation.start();
+       this.animation.start();
 
    }
 
@@ -151,6 +187,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        NetworkCheck.checkConnection(this);
+        if (!NetworkCheck.isNetworkAvailable(this)) {
+            showNoConnectionDialog();
+        }
     }
 }

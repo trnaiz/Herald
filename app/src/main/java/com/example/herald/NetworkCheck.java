@@ -1,7 +1,6 @@
 package com.example.herald;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -31,14 +30,5 @@ public class NetworkCheck {
             }
         }
         return false;
-    }
-
-    public static boolean checkConnection(Context context) {
-        if (!isNetworkAvailable(context)) {
-            Intent intent = new Intent(context, NoInternetActivity.class);
-            context.startActivity(intent);
-            return false;
-        }
-        return true;
     }
 }
