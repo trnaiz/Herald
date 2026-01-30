@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.herald.model.Indicator;
 import com.example.herald.service.APIService;
 
@@ -21,12 +22,15 @@ public class APIComponent {
     private LinearLayout apiLinearContainer;
     private TextView textName, textUpdatedAt;
     private ImageView statusCircle;
+    private ImageView icon;
     private final String url;
+    private final String urlIcon;
 
     public APIComponent(Activity activity, LinearLayout parentLayout, String url) {
         this.activity = activity;
         this.parentLayout = parentLayout;
         this.url = url;
+        this.urlIcon = "https://icons.duckduckgo.com/ip3/" + this.url + ".ico";
     }
 
     /**
@@ -65,7 +69,6 @@ public class APIComponent {
                     apiLinearContainer.setLayoutParams(rowParams);
                     apiLinearContainer.setOrientation(LinearLayout.HORIZONTAL);
                     apiLinearContainer.setGravity(Gravity.CENTER);
-
                     textName = createCenteredTextView(response.getPage().getName());
 //                   TextView textDescription = createCenteredTextView(response.getStatus().getDescription());
                     textUpdatedAt = createCenteredTextView(response.getPage().getUpdatedAt());
