@@ -1,4 +1,4 @@
-package com.example.herald;
+package com.example.herald.view;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -11,7 +11,8 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
-import com.bumptech.glide.Glide;
+import com.example.herald.R;
+import com.example.herald.model.API;
 import com.example.herald.model.Indicator;
 import com.example.herald.service.APIService;
 
@@ -26,16 +27,12 @@ public class APIComponent {
     private TextView textName, textUpdatedAt;
     private ImageView statusCircle;
     private ImageView icon;
-    private final String url;
-    private final String urlIcon;
-    public static final Set<APIComponent> REGISTRY = ConcurrentHashMap.newKeySet();
+    private final API api;
 
-    public APIComponent(Activity activity, LinearLayout parentLayout, String url) {
+    public APIComponent(Activity activity, LinearLayout parentLayout, API api) {
         this.activity = activity;
         this.parentLayout = parentLayout;
-        this.url = url;
-        this.urlIcon = "https://icons.duckduckgo.com/ip3/" + this.url + ".ico";
-        REGISTRY.add(this);
+        this.api = api;
     }
 
     /**
@@ -62,57 +59,38 @@ public class APIComponent {
      * Creates the GUI for the current APIComponent object
      */
     public void createInterface() {
-        try {
-            APIService.getInstance().getStatus(this.url).thenAccept(response -> {
-                Log.d("API", "Réponse reçue");
-                this.activity.runOnUiThread(() -> {
-                    apiLinearContainer = new LinearLayout(activity);
-                    LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                    );
-                    apiLinearContainer.setLayoutParams(rowParams);
-                    apiLinearContainer.setOrientation(LinearLayout.HORIZONTAL);
-                    apiLinearContainer.setGravity(Gravity.CENTER);
-                    textName = createCenteredTextView(response.getPage().getName());
+        this.activity.runOnUiThread(() -> {
+            apiLinearContainer = new LinearLayout(activity);
+            LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            apiLinearContainer.setLayoutParams(rowParams);
+            apiLinearContainer.setOrientation(LinearLayout.HORIZONTAL);
+            apiLinearContainer.setGravity(Gravity.CENTER);
+            textName = createCenteredTextView(this.api.getName());
 //                   TextView textDescription = createCenteredTextView(response.getStatus().getDescription());
-                    textUpdatedAt = createCenteredTextView(response.getPage().getUpdatedAt());
-                    statusCircle = new ImageView(activity);
-                    statusCircle.setImageDrawable(getColorIndicator(Indicator.valueOf(response.getStatus().getIndicator().toUpperCase()), activity));
-                    parentLayout.addView(apiLinearContainer);
-                    apiLinearContainer.addView(textName);
+            textUpdatedAt = createCenteredTextView(this.api.getUpdatedAt());
+            statusCircle = new ImageView(activity);
+            statusCircle.setImageDrawable(getColorIndicator(Indicator.valueOf(this.api.getIndicator().toUpperCase()), activity));
+            parentLayout.addView(apiLinearContainer);
+            apiLinearContainer.addView(textName);
 //                   apiLinearContainer.addView(textDescription);
-                    apiLinearContainer.addView(statusCircle);
-                    apiLinearContainer.addView(textUpdatedAt);
-                });
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            apiLinearContainer.addView(statusCircle);
+            apiLinearContainer.addView(textUpdatedAt);
+        });
     }
 
     /**
      * Refreshes the GUI with the new data for the current APIComponent object
      */
-
     public void refreshInterface() {
-        try {
-            APIService.getInstance().getStatus(this.url).thenAccept(response -> {
-                this.activity.runOnUiThread(() -> {
-                    textName.setText(response.getPage().getName());
-                    textUpdatedAt.setText(response.getPage().getUpdatedAt());
-                    apiLinearContainer.setBackgroundColor(Color.GREEN);
-                });
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void refreshAllInterface() {
-        for (APIComponent api : REGISTRY) {
-            api.refreshInterface();
-        }
+        this.activity.runOnUiThread(() -> {
+            textName.setText(this.api.getName());
+            textUpdatedAt.setText(this.api.getUpdatedAt().toString());
+            statusCircle.setImageDrawable(getColorIndicator(Indicator.valueOf(this.api.getIndicator().toUpperCase()), activity));
+            apiLinearContainer.setBackgroundColor(Color.GREEN);
+        });
     }
 
     public Drawable getColorIndicator(Indicator indicator, Activity activity) {

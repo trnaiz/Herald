@@ -1,4 +1,4 @@
-package com.example.herald;
+package com.example.herald.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -6,7 +6,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.os.Build;
 
-public class NetworkCheck {
+public class NetworkUtils {
 
     public static boolean isNetworkAvailable(Context context){
         if (context == null) return false;

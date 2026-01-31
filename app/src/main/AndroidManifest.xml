@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Herald">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>

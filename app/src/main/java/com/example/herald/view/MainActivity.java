@@ -1,27 +1,30 @@
-package com.example.herald;
+package com.example.herald.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
-import com.example.herald.dto.APIStatusResponse;
+import com.example.herald.model.API;
+import com.example.herald.utils.NetworkUtils;
+import com.example.herald.R;
+import com.example.herald.service.APIService;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
     protected TextView testAPI;
     protected ObjectAnimator animation;
     private AlertDialog noConnectionDialog;
+    private ConstraintLayout rootLayout;
+
+    private final Map<API, APIComponent> apiComponents = new HashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,41 +48,37 @@ public class MainActivity extends AppCompatActivity {
         testInputButton = findViewById(R.id.testInputButton);
         progressIndicator = findViewById(R.id.progressWheel);
         testAPI = findViewById(R.id.testAPI);
+        LinearLayout globalLinearLayout = findViewById(R.id.globalLinearLayout);
+        rootLayout = findViewById(R.id.rootLayout);
 
-        APIComponent github = new APIComponent(this, findViewById(R.id.globalLinearLayout), "https://www.githubstatus.com/api/v2/status.json");
-        github.createInterface();
-
-        APIComponent cloudflare = new APIComponent(this, findViewById(R.id.globalLinearLayout), "https://www.cloudflarestatus.com/api/v2/status.json");
-        cloudflare.createInterface();
-
-        APIComponent openai = new APIComponent(this, findViewById(R.id.globalLinearLayout), "https://status.openai.com/api/v2/status.json");
-        openai.createInterface();
+        for(API api : APIService.getInstance().getAPIs()) {
+            APIComponent apiComponent = new APIComponent(this, globalLinearLayout, api);
+            APIService.getInstance().updateAPI(api).thenRun(apiComponent::createInterface);
+            apiComponents.put(api, apiComponent);
+        }
 
         createRefreshAnimation();
         startRefreshAnimation();
 
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                APIComponent.refreshAllInterface();
-            }
-        });
+        refreshButton.setOnClickListener(view -> refreshAllApi());
     }
+
+    public void refreshApi(API api) {
+        APIService.getInstance().updateAPI(api).thenRun(() -> this.apiComponents.get(api).refreshInterface());
+    }
+
     /**
      * Refreshes all API statuses.
      * @return true if refresh was successful, false if no connection
      */
-    public boolean refreshAllAPI() {
-        if (!NetworkCheck.isNetworkAvailable(this)) {
-            stopRefreshAnimation();
+    private void refreshAllApi() {
+        apiComponents.keySet().forEach(this::refreshApi);
+        if (!NetworkUtils.isNetworkAvailable(this)) {
             showNoConnectionDialog();
-            return false;
         }
         this.testInputButton.setText("Helloo");
-        APIComponent.refreshAllInterface();
-        Toast.makeText(this, "Statut des APIs actualisé", Toast.LENGTH_SHORT).show();
+        Snackbar.make(rootLayout, "Statut des APIs actualisé", Snackbar.LENGTH_SHORT).show();
         startRefreshAnimation();
-        return true;
     }
 
     private void showNoConnectionDialog() {
@@ -91,39 +94,31 @@ public class MainActivity extends AppCompatActivity {
                 .create();
 
         dialogView.findViewById(R.id.btnRetry).setOnClickListener(v -> {
-            if (NetworkCheck.isNetworkAvailable(this)) {
+            if (NetworkUtils.isNetworkAvailable(this)) {
                 noConnectionDialog.dismiss();
             } else {
-                Toast.makeText(this, "Toujours pas de réseau...", Toast.LENGTH_SHORT).show();
+                Snackbar.make(rootLayout, "Toujours pas de réseau...", Snackbar.LENGTH_SHORT).show();
             }
         });
 
         noConnectionDialog.show();
     }
 
-    public void stopRefreshAnimation() {
-        if (animation != null) {
-            animation.removeAllListeners();
-            animation.cancel();
-            animation = null;
-        }
-    }
-
     public void createRefreshAnimation() {
         this.animation = ObjectAnimator.ofInt(this.progressIndicator, "progress", 0, 10000);
-        this.animation.setDuration(30000);
+        this.animation.setDuration(10000);
 
         this.animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                stopRefreshAnimation();
-                refreshAllAPI();
+                refreshAllApi();
             }
         });
     }
 
     public void startRefreshAnimation() {
         if (animation != null) {
+            animation.setCurrentFraction(0f);
             animation.start();
         }
     }
@@ -132,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!NetworkCheck.isNetworkAvailable(this)) {
+        if (!NetworkUtils.isNetworkAvailable(this)) {
             showNoConnectionDialog();
         }
     }
