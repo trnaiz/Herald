@@ -15,6 +15,9 @@ import com.bumptech.glide.Glide;
 import com.example.herald.model.Indicator;
 import com.example.herald.service.APIService;
 
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class APIComponent {
 
     private Activity activity;
@@ -25,12 +28,14 @@ public class APIComponent {
     private ImageView icon;
     private final String url;
     private final String urlIcon;
+    public static final Set<APIComponent> REGISTRY = ConcurrentHashMap.newKeySet();
 
     public APIComponent(Activity activity, LinearLayout parentLayout, String url) {
         this.activity = activity;
         this.parentLayout = parentLayout;
         this.url = url;
         this.urlIcon = "https://icons.duckduckgo.com/ip3/" + this.url + ".ico";
+        REGISTRY.add(this);
     }
 
     /**
@@ -101,6 +106,12 @@ public class APIComponent {
             });
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void refreshAllInterface() {
+        for (APIComponent api : REGISTRY) {
+            api.refreshInterface();
         }
     }
 

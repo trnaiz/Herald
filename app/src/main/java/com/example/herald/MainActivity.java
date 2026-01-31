@@ -51,17 +51,13 @@ public class MainActivity extends AppCompatActivity {
         APIComponent openai = new APIComponent(this, findViewById(R.id.globalLinearLayout), "https://status.openai.com/api/v2/status.json");
         openai.createInterface();
 
-//        createAPIInterface("https://www.githubstatus.com/api/v2/status.json");
-//        createAPIInterface("https://www.cloudflarestatus.com/api/v2/status.json");
-//        createAPIInterface("https://status.openai.com/api/v2/status.json");
-
-        autoRefreshAPI();
+        createRefreshAnimation();
+        startRefreshAnimation();
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openai.refreshInterface();
-                autoRefreshAPI();
+                APIComponent.refreshAllInterface();
             }
         });
     }
@@ -71,13 +67,14 @@ public class MainActivity extends AppCompatActivity {
      */
     public boolean refreshAllAPI() {
         if (!NetworkCheck.isNetworkAvailable(this)) {
-            stopAnimation();
+            stopRefreshAnimation();
             showNoConnectionDialog();
             return false;
         }
         this.testInputButton.setText("Helloo");
-
+        APIComponent.refreshAllInterface();
         Toast.makeText(this, "Statut des APIs actualisé", Toast.LENGTH_SHORT).show();
+        startRefreshAnimation();
         return true;
     }
 
@@ -96,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         dialogView.findViewById(R.id.btnRetry).setOnClickListener(v -> {
             if (NetworkCheck.isNetworkAvailable(this)) {
                 noConnectionDialog.dismiss();
-                autoRefreshAPI();
             } else {
                 Toast.makeText(this, "Toujours pas de réseau...", Toast.LENGTH_SHORT).show();
             }
@@ -105,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         noConnectionDialog.show();
     }
 
-    public void stopAnimation() {
+    public void stopRefreshAnimation() {
         if (animation != null) {
             animation.removeAllListeners();
             animation.cancel();
@@ -113,24 +109,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-   public void autoRefreshAPI() {
-        stopAnimation();
+    public void createRefreshAnimation() {
+        this.animation = ObjectAnimator.ofInt(this.progressIndicator, "progress", 0, 10000);
+        this.animation.setDuration(30000);
 
-       this.animation = ObjectAnimator.ofInt(this.progressIndicator, "progress", 0, 10000);
-       this.animation.setDuration(30000);
+        this.animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                stopRefreshAnimation();
+                refreshAllAPI();
+            }
+        });
+    }
 
-       this.animation.addListener(new AnimatorListenerAdapter() {
-           @Override
-           public void onAnimationEnd(Animator animation) {
-               if (refreshAllAPI()) {
-                   autoRefreshAPI();
-               }
-           }
-       });
+    public void startRefreshAnimation() {
+        if (animation != null) {
+            animation.start();
+        }
+    }
 
-       this.animation.start();
-
-   }
 
     @Override
     protected void onResume() {
