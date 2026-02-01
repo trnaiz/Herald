@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.herald.R;
 import com.example.herald.model.API;
 import com.example.herald.model.Indicator;
@@ -21,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class APIComponent {
 
-    private Activity activity;
+    private AppCompatActivity activity;
     private LinearLayout parentLayout;
     private LinearLayout apiLinearContainer;
     private TextView textName, textUpdatedAt;
@@ -29,7 +31,7 @@ public class APIComponent {
     private ImageView icon;
     private final API api;
 
-    public APIComponent(Activity activity, LinearLayout parentLayout, API api) {
+    public APIComponent(AppCompatActivity activity, LinearLayout parentLayout, API api) {
         this.activity = activity;
         this.parentLayout = parentLayout;
         this.api = api;
@@ -68,12 +70,21 @@ public class APIComponent {
             apiLinearContainer.setLayoutParams(rowParams);
             apiLinearContainer.setOrientation(LinearLayout.HORIZONTAL);
             apiLinearContainer.setGravity(Gravity.CENTER);
+
+            icon = new ImageView(activity);
+            icon.setLayoutParams(new LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    1.0f
+            ));
+            Glide.with(this.activity).load(this.api.getUrlIcon()).into(icon);
             textName = createCenteredTextView(this.api.getName());
 //                   TextView textDescription = createCenteredTextView(response.getStatus().getDescription());
             textUpdatedAt = createCenteredTextView(this.api.getUpdatedAt());
             statusCircle = new ImageView(activity);
             statusCircle.setImageDrawable(getColorIndicator(Indicator.valueOf(this.api.getIndicator().toUpperCase()), activity));
             parentLayout.addView(apiLinearContainer);
+            apiLinearContainer.addView(icon);
             apiLinearContainer.addView(textName);
 //                   apiLinearContainer.addView(textDescription);
             apiLinearContainer.addView(statusCircle);

@@ -1,5 +1,6 @@
 package com.example.herald.service;
 
+import com.bumptech.glide.Glide;
 import com.example.herald.dto.APIStatusResponse;
 import com.example.herald.model.API;
 
@@ -54,6 +55,10 @@ public class APIService extends HttpService {
 
     public List<API> getAPIs() {
         return apis;
+    }
+
+    public void getIcon() {
+
     }
 
 

@@ -1,6 +1,10 @@
 package com.example.herald.model;
 
+import android.net.Uri;
+
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class API {
     private String urlIcon;
@@ -30,6 +34,7 @@ public class API {
 
     public API (String url){
         this.url = url;
+        this.urlIcon = String.format("https://icons.duckduckgo.com/ip3/%s.ico", Uri.parse(this.url).getHost());
     }
 
     public String getUrlIcon() {
@@ -49,6 +54,9 @@ public class API {
     }
 
     public String getUpdatedAt() {
+        OffsetDateTime date = OffsetDateTime.parse(this.updatedAt);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:mm:ss");
+        this.updatedAt = date.format(formatter);
         return updatedAt;
     }
 

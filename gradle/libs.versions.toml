@@ -9,6 +9,7 @@ material = "1.10.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
 glide = "5.0.5"
+corelibrarydesugaring = "2.0.4"
 [libraries]
 jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
@@ -19,6 +20,7 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+desugar_jdk_libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "corelibrarydesugaring" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
