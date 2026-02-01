@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="progress_color">#000000</color>
+    <color name="track_color">#33000000</color>
 </resources>

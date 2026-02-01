@@ -27,14 +27,14 @@
                 android:indeterminate="false"
                 android:max="10000"
                 android:progress="0"
-                app:indicatorColor="#000000"
+                app:indicatorColor="@color/progress_color"
                 app:indicatorSize="32dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/refreshButton"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:trackColor="#33000000"
+                app:trackColor="@color/track_color"
                 app:trackThickness="16dp" />
 
             <ImageButton
@@ -81,7 +81,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/settings_cog_wheel"
+                android:src="@drawable/settings"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/searchButton"
