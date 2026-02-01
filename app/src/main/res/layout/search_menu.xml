@@ -16,7 +16,8 @@
             android:layout_width="96dp"
             android:layout_height="61dp"
             android:layout_weight="0"
-            app:srcCompat="@drawable/search_loop" />
+            app:srcCompat="@drawable/search_loop"
+            app:tint="?attr/colorControlNormal" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
