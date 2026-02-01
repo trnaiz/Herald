@@ -1,9 +1,6 @@
 package com.example.herald.view;
 
-import android.app.Activity;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.view.Gravity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,15 +13,10 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.example.herald.R;
 import com.example.herald.model.API;
-import com.example.herald.model.Indicator;
-import com.example.herald.service.APIService;
-
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class APIComponent {
 
-    private AppCompatActivity activity;
+    private final AppCompatActivity activity;
     private LinearLayout parentLayout;
     private LinearLayout apiLinearContainer;
     private TextView textName, textUpdatedAt;
@@ -34,7 +26,7 @@ public class APIComponent {
 
     // Vues du layout button_main_activity.xml
     private View rootView;
-    private View colorTag;
+    private View colorIndicator;
     private ImageView siteLogo;
     private TextView siteName;
     private TextView siteDate;
@@ -56,7 +48,7 @@ public class APIComponent {
             rootView = inflater.inflate(R.layout.button_main_activity, parentLayout, false);
 
             // Récupère les vues du layout
-            colorTag = rootView.findViewById(R.id.colorTag);
+            colorIndicator = rootView.findViewById(R.id.color_indicator);
             siteLogo = rootView.findViewById(R.id.siteLogo);
             siteName = rootView.findViewById(R.id.siteName);
             siteDate = rootView.findViewById(R.id.siteDate);
@@ -66,14 +58,24 @@ public class APIComponent {
             siteName.setText(this.api.getName());
             siteDate.setText(this.api.getUpdateDate());
             siteTime.setText(this.api.getUpdateTime());
-            colorTag.setBackground(getColorIndicator(Indicator.valueOf(this.api.getIndicator().toUpperCase()), activity));
+            colorIndicator.setBackground(this.api.getIndicator().asDrawable(activity));
 
             // Charge l'icône avec Glide
             Glide.with(this.activity).load(this.api.getUrlIcon()).into(siteLogo);
 
+            rootView.setOnClickListener(listener -> {
+                Intent intent = new Intent(this.activity, DetailActivity.class);
+                intent.putExtra("api", this.api);
+                this.activity.startActivity(intent);
+            });
+
             // Ajoute le layout au parent
-            parentLayout.addView(rootView);
+            this.addTo(this.parentLayout);
         });
+    }
+
+    public void addTo(LinearLayout parentLayout) {
+        parentLayout.addView(this.rootView);
     }
 
     /**
@@ -84,25 +86,8 @@ public class APIComponent {
             siteName.setText(this.api.getName());
             siteDate.setText(this.api.getUpdateDate());
             siteTime.setText(this.api.getUpdateTime());
-            colorTag.setBackground(getColorIndicator(Indicator.valueOf(this.api.getIndicator().toUpperCase()), activity));
+            colorIndicator.setBackground(this.api.getIndicator().asDrawable(activity));
         });
-    }
-
-    public Drawable getColorIndicator(Indicator indicator, Activity activity) {
-        switch (indicator) {
-            case NONE:
-                return ContextCompat.getDrawable(activity, R.drawable.circle_green);
-            case MINOR:
-                return ContextCompat.getDrawable(activity, R.drawable.circle_yellow);
-            case MAJOR:
-                return ContextCompat.getDrawable(activity, R.drawable.circle_orange);
-            case CRITICAL:
-                return ContextCompat.getDrawable(activity, R.drawable.circle_red);
-            case MAINTENANCE:
-                return ContextCompat.getDrawable(activity, R.drawable.circle_blue);
-            default:
-                return ContextCompat.getDrawable(activity, R.drawable.circle_purple);
-        }
     }
 }
 

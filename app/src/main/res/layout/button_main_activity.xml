@@ -12,7 +12,7 @@
 
     <!-- Indicateur de statut -->
     <View
-        android:id="@+id/colorTag"
+        android:id="@+id/color_indicator"
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:background="@drawable/circle_green" />

@@ -1,5 +1,7 @@
 package com.example.herald.dto;
 
+import com.example.herald.model.Indicator;
+
 public class APIStatus {
 
     private String indicator;
@@ -12,6 +14,17 @@ public class APIStatus {
     public void setIndicator(String indicator) {
         this.indicator = indicator;
     }
+
+    public Indicator getIndicatorEnum() {
+        Indicator indicator;
+        try {
+            indicator = Indicator.valueOf(this.indicator.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            indicator = Indicator.UNKNOWN;
+        }
+        return indicator;
+    }
+
 
     public String getDescription() {
         return description;

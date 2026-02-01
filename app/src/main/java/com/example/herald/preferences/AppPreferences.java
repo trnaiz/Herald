@@ -42,6 +42,9 @@ public class AppPreferences {
         defaultUrls.add("https://status.dropbox.com/api/v2/status.json");
         defaultUrls.add("https://status.newrelic.com/api/v2/status.json");
         defaultUrls.add("https://status.datadoghq.com/api/v2/status.json");
+        defaultUrls.add("https://www.redditstatus.com/api/v2/status.json");
+        defaultUrls.add("https://status.zoom.us/api/v2/status.json");
+        defaultUrls.add("https://status.klarna.com/api/v2/status.json");
         saveUrls(defaultUrls);
 
         Map<String, String> defaultParams = new HashMap<>();

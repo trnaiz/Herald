@@ -2,16 +2,22 @@ package com.example.herald.model;
 
 import android.net.Uri;
 
-import java.time.LocalDate;
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class API {
+public class API implements Serializable {
     private String urlIcon;
     private String name;
     private String updatedAt;
     private String url;
     private String description;
+    private Indicator indicator;
+
+    public API (String url){
+        this.url = url;
+        this.urlIcon = String.format("https://www.google.com/s2/favicons?domain=%s&sz=256", Uri.parse(this.url).getHost());
+    }
 
     public String getDescription() {
         return description;
@@ -21,20 +27,12 @@ public class API {
         this.description = description;
     }
 
-    public String getIndicator() {
+    public Indicator getIndicator() {
         return indicator;
     }
 
-    public void setIndicator(String indicator) {
+    public void setIndicator(Indicator indicator) {
         this.indicator = indicator;
-    }
-
-    private String indicator;
-
-
-    public API (String url){
-        this.url = url;
-        this.urlIcon = String.format("https://icons.duckduckgo.com/ip3/%s.ico", Uri.parse(this.url).getHost());
     }
 
     public String getUrlIcon() {

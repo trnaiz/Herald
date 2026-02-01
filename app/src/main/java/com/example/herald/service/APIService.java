@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.herald.dto.APIStatusResponse;
 import com.example.herald.model.API;
+import com.example.herald.model.Indicator;
 import com.example.herald.preferences.AppPreferences;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class APIService extends HttpService {
        return this.getStatus(api.getUrl()).thenAccept(response -> {
             api.setName(response.getPage().getName());
             api.setUpdatedAt(response.getPage().getUpdatedAt());
-            api.setIndicator(response.getStatus().getIndicator());
+            api.setIndicator(response.getStatus().getIndicatorEnum());
             api.setDescription(response.getStatus().getDescription());
         });
     }

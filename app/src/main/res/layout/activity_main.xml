@@ -31,7 +31,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:trackColor="@color/track_color"
-            app:trackThickness="16dp" />
+            app:trackThickness="16dp"
+            app:tint="?attr/colorControlNormal"/>
 
         <ImageButton
             android:id="@+id/refreshButton"
@@ -44,7 +45,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/appLogo"
             app:layout_constraintStart_toEndOf="@+id/progressWheel"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorControlNormal" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/appLogo"
@@ -68,7 +70,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/settingsButton"
             app:layout_constraintStart_toEndOf="@+id/appLogo"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorControlNormal"/>
 
         <ImageButton
             android:id="@+id/settingsButton"
@@ -81,7 +84,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/searchButton"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorControlNormal"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -20,21 +22,30 @@ import com.example.herald.model.API;
 import com.example.herald.utils.NetworkUtils;
 import com.example.herald.R;
 import com.example.herald.service.APIService;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class MainActivity extends AppCompatActivity {
 
     protected ImageButton refreshButton;
+    protected ImageButton searchButton;
     protected TextView testInputButton;
     protected CircularProgressIndicator progressIndicator;
     protected TextView testAPI;
     protected ObjectAnimator animation;
     private AlertDialog noConnectionDialog;
     private ConstraintLayout rootLayout;
+    private LinearLayout globalLinearLayout;
+    private String lastQuerySearch;
 
     private final Map<API, APIComponent> apiComponents = new HashMap<>();
 
@@ -45,11 +56,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         refreshButton = findViewById(R.id.refreshButton);
+        searchButton = findViewById(R.id.searchButton);
         testInputButton = findViewById(R.id.testInputButton);
         progressIndicator = findViewById(R.id.progressWheel);
         testAPI = findViewById(R.id.testAPI);
-        LinearLayout globalLinearLayout = findViewById(R.id.globalLinearLayout);
+        globalLinearLayout = findViewById(R.id.globalLinearLayout);
         rootLayout = findViewById(R.id.rootLayout);
+        lastQuerySearch = "";
 
         // Initialiser APIService avec les URLs depuis AppPreferences
         APIService.getInstance().init(this);
@@ -64,6 +77,59 @@ public class MainActivity extends AppCompatActivity {
         startRefreshAnimation();
 
         refreshButton.setOnClickListener(view -> refreshAllApi());
+        searchButton.setOnClickListener(view -> showMenuSearch());
+    }
+
+    private void showMenuSearch() {
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.search_menu, null);
+        TextInputEditText searchInput = view.findViewById(R.id.search_input);
+        searchInput.setText(lastQuerySearch);
+        searchInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchAPI(s.toString());
+                lastQuerySearch = s.toString();
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+        });
+
+        view.findViewById(R.id.sort_by_name).setOnClickListener(v -> updateSort(Comparator.comparing(API::getName)));
+        view.findViewById(R.id.sort_by_status).setOnClickListener(v -> updateSort(Comparator.comparing(API::getIndicator)));
+        dialog.setContentView(view);
+        dialog.show();
+
+
+    }
+
+    public void updateSort(Comparator<API> comparator) {
+        this.runOnUiThread(() -> {
+            this.globalLinearLayout.removeAllViews();
+            List<API> apis = APIService.getInstance().getAPIs();
+            apis.sort(comparator);
+            for (API api : apis) {
+                this.apiComponents.get(api).addTo(this.globalLinearLayout);
+            }
+        });
+    }
+
+    private void searchAPI(String text) {
+        this.runOnUiThread(() -> {
+            this.globalLinearLayout.removeAllViews();
+            List<API> searchedList = new ArrayList<>();
+
+            for (API api : APIService.getInstance().getAPIs()) {
+                if (api.getName().toLowerCase().contains(text.toLowerCase())) {
+                    searchedList.add(api);
+                    this.apiComponents.get(api).addTo(this.globalLinearLayout);
+                }
+            }
+        });
     }
 
     public void refreshApi(API api) {
