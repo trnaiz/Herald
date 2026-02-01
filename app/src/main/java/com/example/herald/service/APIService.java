@@ -1,21 +1,21 @@
 package com.example.herald.service;
 
-import com.bumptech.glide.Glide;
+import android.content.Context;
+
 import com.example.herald.dto.APIStatusResponse;
 import com.example.herald.model.API;
+import com.example.herald.preferences.AppPreferences;
 
+import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class APIService extends HttpService {
 
-    private final List<API> apis = List.of(
-            new API("https://www.githubstatus.com/api/v2/status.json"),
-            new API("https://www.cloudflarestatus.com/api/v2/status.json"),
-            new API("https://status.openai.com/api/v2/status.json")
-    );
-
+    private List<API> apis = new ArrayList<>();
     private static APIService instance;
 
     public static APIService getInstance() {
@@ -26,6 +26,16 @@ public class APIService extends HttpService {
     }
 
     private APIService() {}
+
+    public void init(Context context) {
+        AppPreferences preferences = new AppPreferences(context);
+        ArrayList<String> urls = preferences.getUrls();
+
+        apis.clear();
+        for (String url : urls) {
+            apis.add(new API(url));
+        }
+    }
 
 
     /**
@@ -56,11 +66,6 @@ public class APIService extends HttpService {
     public List<API> getAPIs() {
         return apis;
     }
-
-    public void getIcon() {
-
-    }
-
 
 }
 

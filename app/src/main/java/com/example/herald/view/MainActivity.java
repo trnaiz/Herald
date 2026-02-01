@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout globalLinearLayout = findViewById(R.id.globalLinearLayout);
         rootLayout = findViewById(R.id.rootLayout);
 
+        // Initialiser APIService avec les URLs depuis AppPreferences
+        APIService.getInstance().init(this);
+
         for(API api : APIService.getInstance().getAPIs()) {
             APIComponent apiComponent = new APIComponent(this, globalLinearLayout, api);
             APIService.getInstance().updateAPI(api).thenRun(apiComponent::createInterface);
@@ -64,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshApi(API api) {
+        if (!NetworkUtils.isNetworkAvailable(this)) {
+            showNoConnectionDialog();
+        }
         APIService.getInstance().updateAPI(api).thenRun(() -> this.apiComponents.get(api).refreshInterface());
     }
 

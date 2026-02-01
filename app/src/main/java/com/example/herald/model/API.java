@@ -53,11 +53,16 @@ public class API {
         this.name = name;
     }
 
-    public String getUpdatedAt() {
+    public String getUpdateDate() {
         OffsetDateTime date = OffsetDateTime.parse(this.updatedAt);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:mm:ss");
-        this.updatedAt = date.format(formatter);
-        return updatedAt;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return date.format(formatter);
+    }
+
+    public String getUpdateTime() {
+        OffsetDateTime time = OffsetDateTime.parse(this.updatedAt);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return time.format(formatter);
     }
 
     public void setUpdatedAt(String updatedAt) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import android.content.SharedPreferences;
@@ -27,26 +28,20 @@ public class AppPreferences {
     }
 
     private void initDefaultValues() {
-        Map<String, String> defaultUrls = new HashMap<>();
-        defaultUrls.put("Cloudflare", "https://www.cloudflarestatus.com/api/v2/status.json");
-        defaultUrls.put("GitHub", "https://www.githubstatus.com/api/v2/status.json");
-        defaultUrls.put("Vercel", "https://www.vercel-status.com/api/v2/status.json");
-        defaultUrls.put("OpenAI", "https://status.openai.com/api/v2/status.json");
-        defaultUrls.put("Anthropic", "https://status.anthropic.com/api/v2/status.json");
-        defaultUrls.put("Stripe", "https://status.stripe.com/api/v2/status.json");
-        defaultUrls.put("Slack", "https://status.slack.com/api/v2/status.json");
-        defaultUrls.put("Discord", "https://discordstatus.com/api/v2/status.json");
-        defaultUrls.put("DigitalOcean", "https://status.digitalocean.com/api/v2/status.json");
-        defaultUrls.put("GitLab", "https://status.gitlab.com/api/v2/status.json");
-        defaultUrls.put("Atlassian", "https://status.atlassian.com/api/v2/status.json");
-        defaultUrls.put("Sentry", "https://status.sentry.io/api/v2/status.json");
-        defaultUrls.put("Twilio", "https://status.twilio.com/api/v2/status.json");
-        defaultUrls.put("Fastly", "https://www.fastlystatus.com/api/v2/status.json");
-        defaultUrls.put("Dropbox", "https://status.dropbox.com/api/v2/status.json");
-        defaultUrls.put("New Relic", "https://status.newrelic.com/api/v2/status.json");
-        defaultUrls.put("Datadog", "https://status.datadoghq.com/api/v2/status.json");
-        defaultUrls.put("Google Cloud", "https://status.cloud.google.com/index.json");
-        defaultUrls.put("AWS", "https://health.aws.amazon.com/health/status/status.json");
+        ArrayList<String> defaultUrls = new ArrayList<>();
+        defaultUrls.add("https://www.cloudflarestatus.com/api/v2/status.json");
+        defaultUrls.add("https://www.githubstatus.com/api/v2/status.json");
+        defaultUrls.add("https://www.vercel-status.com/api/v2/status.json");
+        defaultUrls.add("https://status.openai.com/api/v2/status.json");
+        defaultUrls.add("https://status.anthropic.com/api/v2/status.json");
+        defaultUrls.add("https://discordstatus.com/api/v2/status.json");
+        defaultUrls.add("https://status.digitalocean.com/api/v2/status.json");
+        defaultUrls.add("https://status.atlassian.com/api/v2/status.json");
+        defaultUrls.add("https://status.sentry.io/api/v2/status.json");
+        defaultUrls.add("https://status.twilio.com/api/v2/status.json");
+        defaultUrls.add("https://status.dropbox.com/api/v2/status.json");
+        defaultUrls.add("https://status.newrelic.com/api/v2/status.json");
+        defaultUrls.add("https://status.datadoghq.com/api/v2/status.json");
         saveUrls(defaultUrls);
 
         Map<String, String> defaultParams = new HashMap<>();
@@ -55,25 +50,26 @@ public class AppPreferences {
 
     // --- URLs ---
 
-    public Map<String, String> getUrls() {
-        String json = prefs.getString(KEY_URLS, "{}");
-        Type type = new TypeToken<Map<String, String>>(){}.getType();
+    public ArrayList<String> getUrls() {
+        String json = prefs.getString(KEY_URLS, "[]");
+        Type type = new TypeToken<ArrayList<String>>(){}.getType();
         return gson.fromJson(json, type);
     }
 
-    public void saveUrls(Map<String, String> urls) {
+    public void saveUrls(ArrayList<String> urls) {
         String json = gson.toJson(urls);
         prefs.edit().putString(KEY_URLS, json).apply();
     }
 
-    public void addUrl(String name, String url) {
-        Map<String, String> urls = getUrls();
-        urls.put(name, url);
+    // Fonction utile dans le cas où nous voulons ajouter une url à la liste (Elle sera implémenté plus tard)
+    public void addUrl(String url) {
+        ArrayList<String> urls = getUrls();
+        urls.add(url);
         saveUrls(urls);
     }
 
     public void removeUrl(String name) {
-        Map<String, String> urls = getUrls();
+        ArrayList<String> urls = getUrls();
         urls.remove(name);
         saveUrls(urls);
     }
