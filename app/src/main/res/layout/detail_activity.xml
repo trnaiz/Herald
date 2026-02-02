@@ -171,7 +171,7 @@
         android:layout_marginTop="8dp"
         android:autoLink="web"
         android:text="Link health"
-        android:textColorLink="#FFFFFF"
+        android:textColorLink="?attr/colorControlNormal"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
