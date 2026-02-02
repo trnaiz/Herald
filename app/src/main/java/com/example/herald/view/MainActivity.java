@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout rootLayout;
     private LinearLayout globalLinearLayout;
     private String lastQuerySearch;
+    private Comparator<API> currentComparator;
 
     private final Map<API, APIComponent> apiComponents = new HashMap<>();
 
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         globalLinearLayout = findViewById(R.id.globalLinearLayout);
         rootLayout = findViewById(R.id.rootLayout);
         lastQuerySearch = "";
+        currentComparator = Comparator.comparing(API::getName);
 
         // Initialiser APIService avec les URLs depuis AppPreferences
         APIService.getInstance().init(this);
@@ -107,29 +109,34 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void updateSort(Comparator<API> comparator) {
+    private void applyFilterAndSort() {
         this.runOnUiThread(() -> {
             this.globalLinearLayout.removeAllViews();
-            List<API> apis = APIService.getInstance().getAPIs();
-            apis.sort(comparator);
-            for (API api : apis) {
-                this.apiComponents.get(api).addTo(this.globalLinearLayout);
+
+            List<API> apis = new ArrayList<>(APIService.getInstance().getAPIs());
+
+            if (currentComparator != null) {
+                apis.sort(currentComparator);
             }
-        });
-    }
 
-    private void searchAPI(String text) {
-        this.runOnUiThread(() -> {
-            this.globalLinearLayout.removeAllViews();
-            List<API> searchedList = new ArrayList<>();
-
-            for (API api : APIService.getInstance().getAPIs()) {
-                if (api.getName().toLowerCase().contains(text.toLowerCase())) {
-                    searchedList.add(api);
-                    this.apiComponents.get(api).addTo(this.globalLinearLayout);
+            for (API api : apis) {
+                if (api.getName().toLowerCase().contains(lastQuerySearch.toLowerCase())) {
+                    APIComponent component = this.apiComponents.get(api);
+                    if (component != null) {
+                        component.addTo(this.globalLinearLayout);
+                    }
                 }
             }
         });
+    }
+    public void updateSort(Comparator<API> comparator) {
+        this.currentComparator = comparator;
+        applyFilterAndSort();
+    }
+
+    private void searchAPI(String text) {
+        this.lastQuerySearch = text;
+        applyFilterAndSort();
     }
 
     public void refreshApi(API api) {

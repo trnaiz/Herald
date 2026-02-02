@@ -29,7 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:hint="Rechercher" />
+                android:hint="Rechercher"
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
