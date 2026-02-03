@@ -13,13 +13,13 @@
         android:maxWidth="120dp"
         android:maxHeight="90dp"
         android:src="@drawable/network_wireless_no_route"
-        android:contentDescription="@string/no_connexion"/>
+        android:contentDescription="@string/no_connection"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/title_no_connexion"
+        android:text="@string/title_no_connection"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/first_line_no_connexion"
+        android:text="@string/first_line_no_connection"
         android:textAlignment="center"
         android:textSize="16sp" />
 
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/second_line_no_connexion"
+        android:text="@string/second_line_no_connection"
         android:textAlignment="center"
         android:textSize="14sp" />
 

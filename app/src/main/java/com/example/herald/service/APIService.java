@@ -4,15 +4,11 @@ import android.content.Context;
 
 import com.example.herald.dto.APIStatusResponse;
 import com.example.herald.model.API;
-import com.example.herald.model.Indicator;
 import com.example.herald.preferences.AppPreferences;
 
 import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 
 public class APIService extends HttpService {
 
