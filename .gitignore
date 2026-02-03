@@ -16,3 +16,7 @@ local.properties
 .idea
 /.idea
 .idea/
+/app/release/baselineProfiles/0/app-release.dm
+/app/release/baselineProfiles/1/app-release.dm
+/app/release/herald-v1.0.0.apk
+/app/release/output-metadata.json
