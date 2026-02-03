@@ -25,7 +25,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Options"
+                android:text="@string/options"
                 android:textAlignment="inherit"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -35,7 +35,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/x_button"
-                app:tint="?attr/colorControlNormal" />
+                app:tint="?attr/colorControlNormal"
+                android:contentDescription="@string/quit"/>
 
         </LinearLayout>
 
@@ -49,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Thème"
+            android:text="@string/theme"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -68,7 +69,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Clair"
+                android:text="@string/clair"
                 android:textColor="@color/btn_theme_text"
                 app:backgroundTint="@color/btn_theme_background"
                 app:strokeColor="@color/blue_primary" />
@@ -79,7 +80,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sombre"
+                android:text="@string/sombre"
                 android:textColor="@color/btn_theme_text"
                 app:backgroundTint="@color/btn_theme_background"
                 app:strokeColor="@color/blue_primary" />
@@ -90,11 +91,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Auto"
+                android:text="@string/auto"
                 android:textColor="@color/btn_theme_text"
                 app:backgroundTint="@color/btn_theme_background"
                 app:strokeColor="@color/blue_primary" />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <TextView
+            android:id="@+id/testText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/in_progress" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

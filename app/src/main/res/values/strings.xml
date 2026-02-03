@@ -1,3 +1,37 @@
 <resources>
     <string name="app_name">Herald</string>
+    <string name="title_no_connexion">Oups !</string>
+    <string name="first_line_no_connexion">Il semble que vous ne soyez pas connecté au réseau.</string>
+    <string name="second_line_no_connexion">Veuillez vérifier votre connexion puis réessayer !</string>
+    <string name="retry">Réessayer</string>
+    <string name="name_api">NOM API</string>
+    <string name="state">État</string>
+    <string name="value">Valeur</string>
+    <string name="description_title">Description</string>
+    <string name="description_text">DescriptionText</string>
+    <string name="update">Mise à jour</string>
+    <string name="date">Date</string>
+    <string name="time">Hour</string>
+    <string name="life_link">Lien santé</string>
+    <string name="health_link">Link health</string>
+    <string name="icon_text">Icon</string>
+    <string name="quit">Quitter</string>
+    <string name="no_connexion">pas_de_connection</string>
+    <string name="refresh_button">refresh_Button</string>
+    <string name="search">recherche</string>
+    <string name="parameters">paramètres</string>
+    <string name="in_progress">Herald est en cours de développement</string>
+    <string name="auto">Auto</string>
+    <string name="sombre">Sombre</string>
+    <string name="clair">Clair</string>
+    <string name="theme">Thème</string>
+    <string name="options">Options</string>
+    <string name="sort_by_name">Trier par nom</string>
+    <string name="sort_by_state">Trier par état</string>
+    <string name="Website_name">Nom du site</string>
+    <string name="default_date">01/01/2025</string>
+    <string name="default_time">12:00:00</string>
+    <string name="still_no_network">Toujours pas de réseau…</string>
+    <string name="api_update">Statut des APIs actualisé</string>
+
 </resources>

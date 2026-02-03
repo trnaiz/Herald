@@ -17,7 +17,8 @@
             android:layout_height="61dp"
             android:layout_weight="0"
             app:srcCompat="@drawable/search_loop"
-            app:tint="?attr/colorControlNormal" />
+            app:tint="?attr/colorControlNormal"
+            android:contentDescription="@string/search" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -29,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:hint="Rechercher"
+                android:hint="@string/search"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -40,7 +41,7 @@
         android:layout_height="wrap_content"
         android:drawablePadding="16dp"
         android:padding="16dp"
-        android:text="Trier par nom"
+        android:text="@string/sort_by_name"
         android:textAlignment="center"
         android:textSize="18sp" />
 
@@ -50,7 +51,7 @@
         android:layout_height="wrap_content"
         android:drawablePadding="16dp"
         android:padding="16dp"
-        android:text="Trier par état"
+        android:text="@string/sort_by_state"
         android:textAlignment="center"
         android:textSize="18sp" />
 

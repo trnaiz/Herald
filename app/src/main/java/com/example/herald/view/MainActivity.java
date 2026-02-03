@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.content.Intent;
 
 import androidx.appcompat.app.AlertDialog;
@@ -20,7 +18,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.herald.preferences.AppPreferences;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.herald.model.API;
 import com.example.herald.utils.NetworkUtils;
@@ -41,9 +38,7 @@ import java.util.concurrent.CompletableFuture;
 public class MainActivity extends AppCompatActivity {
 
     protected ImageButton refreshButton, searchButton, settingsButton;
-    protected TextView testInputButton;
     protected CircularProgressIndicator progressIndicator;
-    protected TextView testAPI;
     protected ObjectAnimator animation;
     private AlertDialog noConnectionDialog;
     private ConstraintLayout rootLayout;
@@ -61,9 +56,7 @@ public class MainActivity extends AppCompatActivity {
         refreshButton = findViewById(R.id.refreshButton);
         searchButton = findViewById(R.id.searchButton);
         settingsButton = findViewById(R.id.settingsButton);
-        testInputButton = findViewById(R.id.testInputButton);
         progressIndicator = findViewById(R.id.progressWheel);
-        testAPI = findViewById(R.id.testAPI);
         globalLinearLayout = findViewById(R.id.globalLinearLayout);
         rootLayout = findViewById(R.id.rootLayout);
         update_theme();
@@ -91,11 +84,13 @@ public class MainActivity extends AppCompatActivity {
      * Use /AppPreference to get the saved parameters
      */
     protected boolean update_theme() {
+        int themeMode;
         AppPreferences appPreferences = new AppPreferences(this);
         Map<String, String> params = appPreferences.getParameters();
-        String savedTheme = params.getOrDefault("theme_mode",
-                String.valueOf(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));
-        int themeMode = Integer.parseInt(savedTheme);
+        String savedTheme = params.getOrDefault("theme_mode", String.valueOf(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));
+        if (savedTheme == null) themeMode = -1;
+        else themeMode = Integer.parseInt(savedTheme);
+
         if (AppCompatDelegate.getDefaultNightMode() != themeMode) {
             AppCompatDelegate.setDefaultNightMode(themeMode);
             return true;
@@ -176,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Refreshes all API statuses.
-     * @return true if refresh was successful, false if no connection
      */
     private void refreshAllApi() {
         if (apiComponents.isEmpty()) return;
@@ -184,8 +178,7 @@ public class MainActivity extends AppCompatActivity {
         if (!NetworkUtils.isNetworkAvailable(this)) {
             showNoConnectionDialog();
         }
-        this.testInputButton.setText("Helloo");
-        Snackbar.make(rootLayout, "Statut des APIs actualisé", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(rootLayout, getString(R.string.api_update), Snackbar.LENGTH_SHORT).show();
         startRefreshAnimation();
     }
 
@@ -205,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
             if (NetworkUtils.isNetworkAvailable(this)) {
                 noConnectionDialog.dismiss();
             } else {
-                Snackbar.make(rootLayout, "Toujours pas de réseau...", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(rootLayout, getString(R.string.still_no_network), Snackbar.LENGTH_SHORT).show();
             }
         });
 
