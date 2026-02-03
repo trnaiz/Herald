@@ -14,11 +14,20 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Represents a service for making HTTP requests.
+ * Uses Jackson in order to map JSON to Java objects.
+ * Those objects are detailed in the dto package.
+ */
 public class HttpService {
     protected final ObjectMapper jsonMapper = new ObjectMapper().setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
 
     private final ExecutorService executor;
 
+    /**
+     * Constructor for the HttpService class.
+     * Initializes the executor service with a thread pool of 4.
+     */
     protected HttpService() {
         this.executor = Executors.newFixedThreadPool(4);
 
@@ -63,7 +72,7 @@ public class HttpService {
     }
 
     /**
-     * Performs an async GET request on the given URL read it as JSON and maps the response to the given class.
+     * Performs an async GET request on the given URL reads it as JSON and maps the response to the given class.
      *
      * @param urlString The URL to request
      * @param clazz The class to map the response to

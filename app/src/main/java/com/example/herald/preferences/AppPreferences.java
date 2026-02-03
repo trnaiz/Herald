@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 import android.content.SharedPreferences;
 
+/**
+ * Class representing the preferences of the app
+ */
 public class AppPreferences {
 
     private static final String PREFS_NAME = "app_preferences";

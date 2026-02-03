@@ -15,6 +15,11 @@ public class APIService extends HttpService {
     private List<API> apis = new ArrayList<>();
     private static APIService instance;
 
+    /**
+     * Gets the singleton instance of the APIService
+     *
+     * @return The singleton instance of the APIService
+     */
     public static APIService getInstance() {
         if(instance == null) {
             instance = new APIService();
@@ -24,6 +29,10 @@ public class APIService extends HttpService {
 
     private APIService() {}
 
+    /**
+     * Initializes the APIService with the saved urls
+     * @param context The context of the application
+     */
     public void init(Context context) {
         AppPreferences preferences = new AppPreferences(context);
         ArrayList<String> urls = preferences.getUrls();

@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat;
 import com.example.herald.R;
 
 /**
- * Sets static constants for each indicators available
+ * Defines the available indicator levels and their associated resources.
  */
 public enum Indicator {
     NONE(R.drawable.circle_green),
@@ -30,6 +30,9 @@ public enum Indicator {
         return circle;
     }
 
+    /**
+     * Converts the indicator to a drawable
+     */
     public Drawable asDrawable(Context context) {
         return ContextCompat.getDrawable(context, this.circle);
     }

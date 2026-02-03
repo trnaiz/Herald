@@ -8,12 +8,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.herald.R;
 import com.example.herald.model.API;
 
+/**
+ * Represents a component for an API in the main activity (the line of GUI of a given API)
+ */
 public class APIComponent {
 
     private final AppCompatActivity activity;
@@ -69,6 +71,11 @@ public class APIComponent {
         });
     }
 
+    /**
+     * Adds the current APIComponent object to the given LinearLayout
+     *
+     * @param parentLayout The LinearLayout to add the current APIComponent object to
+     */
     public void addTo(LinearLayout parentLayout) {
         parentLayout.addView(this.rootView);
     }

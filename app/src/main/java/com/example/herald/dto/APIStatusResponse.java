@@ -1,5 +1,8 @@
 package com.example.herald.dto;
 
+/**
+ * Java object representing the root of the hierarchy of an API status based on what Jackson got.
+ */
 public class APIStatusResponse {
     private StatusPage page;
     private APIStatus status;

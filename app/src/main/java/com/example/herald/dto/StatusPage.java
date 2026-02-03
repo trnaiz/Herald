@@ -1,5 +1,8 @@
 package com.example.herald.dto;
 
+/**
+ * Java object used to extract the sublevel of the APIStatusResponse object named Page.
+ */
 public class StatusPage {
 
     private String id;

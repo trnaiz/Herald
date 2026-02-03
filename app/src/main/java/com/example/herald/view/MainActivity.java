@@ -35,6 +35,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents the main activity of the application
+ */
 public class MainActivity extends AppCompatActivity {
 
     protected ImageButton refreshButton, searchButton, settingsButton;
@@ -62,11 +65,15 @@ public class MainActivity extends AppCompatActivity {
         globalLinearLayout = findViewById(R.id.globalLinearLayout);
         rootLayout = findViewById(R.id.rootLayout);
         update_theme();
+        // Initialize a default value for the query search
         lastQuerySearch = "";
         currentComparator = Comparator.comparing(API::getName);
 
+        // Initialize the API service by populating the apis list
         APIService.getInstance().init(this);
 
+
+        // Create a component for each API (according to the apis List<>) and add it to the global linear layout
         for(API api : APIService.getInstance().getAPIs()) {
             APIComponent apiComponent = new APIComponent(this, globalLinearLayout, api);
             APIService.getInstance().updateAPI(api).thenRun(apiComponent::createInterface);
@@ -76,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         createRefreshAnimation();
         startRefreshAnimation();
 
+        // Creates all listeners for the navbar
         refreshButton.setOnClickListener(view -> refreshAllApi());
         searchButton.setOnClickListener(view -> showMenuSearch());
         settingsButton.setOnClickListener(view -> showOptionActivity());
@@ -122,6 +130,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, OptionsActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * Opens the search menu
+     */
     private void showMenuSearch() {
         BottomSheetDialog dialog = new BottomSheetDialog(this);
         View view = LayoutInflater.from(this).inflate(R.layout.search_menu, null);
@@ -149,6 +161,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Applies the search and sort to the global linear layout
+     */
     private void applyFilterAndSort() {
         this.runOnUiThread(() -> {
             this.globalLinearLayout.removeAllViews();
@@ -169,16 +184,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Updates the sort of the API list based on which button was pressed
+     * @param comparator The comparator to use
+     */
     public void updateSort(Comparator<API> comparator) {
         this.currentComparator = comparator;
         applyFilterAndSort();
     }
 
+    /**
+     * Updates the search of the API list based on the text entered in the search bar
+     * @param text The text to search for
+     */
     private void searchAPI(String text) {
         this.lastQuerySearch = text;
         applyFilterAndSort();
     }
 
+    /**
+     * Refreshes an API
+     * @param api The API to refresh
+     */
     public void refreshApi(API api) {
         if (!NetworkUtils.isNetworkAvailable(this)) {
             showNoConnectionDialog();
@@ -199,6 +227,10 @@ public class MainActivity extends AppCompatActivity {
         startRefreshAnimation();
     }
 
+    /**
+     * Shows a dialog with no connection message
+     * If the dialog is already shown, it will not be shown again
+     */
     private void showNoConnectionDialog() {
         if (noConnectionDialog != null && noConnectionDialog.isShowing()) {
             return;
@@ -222,6 +254,11 @@ public class MainActivity extends AppCompatActivity {
         noConnectionDialog.show();
     }
 
+    /**
+     * Creates the animation for the refresh button
+     * The animation will refresh all API statuses every 10 seconds
+     * Possible future implementation for a custom auto-refresh time?
+     */
     public void createRefreshAnimation() {
         this.animation = ObjectAnimator.ofInt(this.progressIndicator, "progress", 0, 10000);
         this.animation.setDuration(10000);
@@ -234,6 +271,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Starts the animation for the refresh button
+     */
     public void startRefreshAnimation() {
         if (animation != null) {
             animation.setCurrentFraction(0f);

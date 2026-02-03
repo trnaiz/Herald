@@ -11,6 +11,10 @@ import com.bumptech.glide.Glide;
 import com.example.herald.R;
 import com.example.herald.model.API;
 
+/**
+ * Represents the detail activity of the application
+ * It displays the details of an API when it is clicked in the main activity
+ */
 public class DetailActivity extends AppCompatActivity {
     private ImageView apiIcon;
     private TextView apiName;

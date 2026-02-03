@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents an API with its associated information, as a model class.
+ */
 public class API implements Serializable {
     private String shortUrl;
     private String urlIcon;

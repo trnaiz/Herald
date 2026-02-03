@@ -14,6 +14,9 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.Map;
 
+/**
+ * Represents the options activity of the application
+ */
 public class OptionsActivity extends AppCompatActivity {
     private ImageView leaveButton;
     private AppPreferences appPreferences;
