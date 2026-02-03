@@ -6,15 +6,20 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.os.Build;
 
+
 public class NetworkUtils {
 
+    /**
+     * Check if the device is connected to internet
+     * @param context
+     * @return true if the device is connected to internet, false otherwise
+     */
     public static boolean isNetworkAvailable(Context context){
         if (context == null) return false;
 
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if (connectivityManager != null) {
-            // Pour Android 6.0 (API 23) et versions ultérieures
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 Network network = connectivityManager.getActiveNetwork();
                 if (network == null) return false;

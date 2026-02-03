@@ -12,9 +12,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
+import com.example.herald.preferences.AppPreferences;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
@@ -36,8 +40,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class MainActivity extends AppCompatActivity {
 
-    protected ImageButton refreshButton;
-    protected ImageButton searchButton;
+    protected ImageButton refreshButton, searchButton, settingsButton;
     protected TextView testInputButton;
     protected CircularProgressIndicator progressIndicator;
     protected TextView testAPI;
@@ -47,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout globalLinearLayout;
     private String lastQuerySearch;
     private Comparator<API> currentComparator;
-
     private final Map<API, APIComponent> apiComponents = new HashMap<>();
 
 
@@ -58,15 +60,16 @@ public class MainActivity extends AppCompatActivity {
 
         refreshButton = findViewById(R.id.refreshButton);
         searchButton = findViewById(R.id.searchButton);
+        settingsButton = findViewById(R.id.settingsButton);
         testInputButton = findViewById(R.id.testInputButton);
         progressIndicator = findViewById(R.id.progressWheel);
         testAPI = findViewById(R.id.testAPI);
         globalLinearLayout = findViewById(R.id.globalLinearLayout);
         rootLayout = findViewById(R.id.rootLayout);
+        update_theme();
         lastQuerySearch = "";
         currentComparator = Comparator.comparing(API::getName);
 
-        // Initialiser APIService avec les URLs depuis AppPreferences
         APIService.getInstance().init(this);
 
         for(API api : APIService.getInstance().getAPIs()) {
@@ -80,8 +83,33 @@ public class MainActivity extends AppCompatActivity {
 
         refreshButton.setOnClickListener(view -> refreshAllApi());
         searchButton.setOnClickListener(view -> showMenuSearch());
+        settingsButton.setOnClickListener(view -> showOptionActivity());
     }
 
+    /**
+     * Update the theme of the application according to the saved parameters
+     * Use /AppPreference to get the saved parameters
+     */
+    protected boolean update_theme() {
+        AppPreferences appPreferences = new AppPreferences(this);
+        Map<String, String> params = appPreferences.getParameters();
+        String savedTheme = params.getOrDefault("theme_mode",
+                String.valueOf(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));
+        int themeMode = Integer.parseInt(savedTheme);
+        if (AppCompatDelegate.getDefaultNightMode() != themeMode) {
+            AppCompatDelegate.setDefaultNightMode(themeMode);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Opens the options activity
+     */
+    private void showOptionActivity() {
+        Intent intent = new Intent(this, OptionsActivity.class);
+        startActivity(intent);
+    }
     private void showMenuSearch() {
         BottomSheetDialog dialog = new BottomSheetDialog(this);
         View view = LayoutInflater.from(this).inflate(R.layout.search_menu, null);
@@ -151,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
      * @return true if refresh was successful, false if no connection
      */
     private void refreshAllApi() {
+        if (apiComponents.isEmpty()) return;
         apiComponents.keySet().forEach(this::refreshApi);
         if (!NetworkUtils.isNetworkAvailable(this)) {
             showNoConnectionDialog();
@@ -206,8 +235,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (update_theme()) return;
         if (!NetworkUtils.isNetworkAvailable(this)) {
             showNoConnectionDialog();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (noConnectionDialog != null && noConnectionDialog.isShowing()) {
+            noConnectionDialog.dismiss();
+        }
+        if (animation != null) {
+            animation.cancel();
+        }
+        super.onDestroy();
     }
 }

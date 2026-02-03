@@ -24,7 +24,6 @@ public class APIComponent {
     private ImageView icon;
     private final API api;
 
-    // Vues du layout button_main_activity.xml
     private View rootView;
     private View colorIndicator;
     private ImageView siteLogo;
@@ -43,25 +42,22 @@ public class APIComponent {
      */
     public void createInterface() {
         this.activity.runOnUiThread(() -> {
-            // Inflate le layout button_main_activity.xml
             LayoutInflater inflater = LayoutInflater.from(activity);
             rootView = inflater.inflate(R.layout.button_main_activity, parentLayout, false);
-
-            // Récupère les vues du layout
             colorIndicator = rootView.findViewById(R.id.color_indicator);
             siteLogo = rootView.findViewById(R.id.siteLogo);
             siteName = rootView.findViewById(R.id.siteName);
             siteDate = rootView.findViewById(R.id.siteDate);
             siteTime = rootView.findViewById(R.id.siteTime);
 
-            // Met à jour les données
             siteName.setText(this.api.getName());
             siteDate.setText(this.api.getUpdateDate());
             siteTime.setText(this.api.getUpdateTime());
             colorIndicator.setBackground(this.api.getIndicator().asDrawable(activity));
 
-            // Charge l'icône avec Glide
-            Glide.with(this.activity).load(this.api.getUrlIcon()).into(siteLogo);
+            if (!this.activity.isDestroyed()) {
+                Glide.with(this.activity).load(this.api.getUrlIcon()).into(siteLogo);
+            }
 
             rootView.setOnClickListener(listener -> {
                 Intent intent = new Intent(this.activity, DetailActivity.class);
@@ -69,7 +65,6 @@ public class APIComponent {
                 this.activity.startActivity(intent);
             });
 
-            // Ajoute le layout au parent
             this.addTo(this.parentLayout);
         });
     }

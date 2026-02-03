@@ -21,12 +21,14 @@ public class AppPreferences {
     public AppPreferences(Context context) {
         this.prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
-        // Si vide, initialiser avec les valeurs par défaut
         if (prefs.getAll().isEmpty()) {
             initDefaultValues();
         }
     }
 
+    /**
+     * Initialize the default values for the app preferences if none are already set
+     */
     private void initDefaultValues() {
         ArrayList<String> defaultUrls = new ArrayList<>();
         defaultUrls.add("https://www.cloudflarestatus.com/api/v2/status.json");
@@ -51,7 +53,10 @@ public class AppPreferences {
         saveParameters(defaultParams);
     }
 
-    // --- URLs ---
+    /**
+     * Get the list of URLs from SharedPreference
+     * @return ArrayList<String>
+     */
 
     public ArrayList<String> getUrls() {
         String json = prefs.getString(KEY_URLS, "[]");
@@ -59,32 +64,51 @@ public class AppPreferences {
         return gson.fromJson(json, type);
     }
 
+    /**
+     * Save the list of URLs to SharedPreference
+     * @param urls ArrayList<String>
+     */
     public void saveUrls(ArrayList<String> urls) {
         String json = gson.toJson(urls);
         prefs.edit().putString(KEY_URLS, json).apply();
     }
 
-    // Fonction utile dans le cas où nous voulons ajouter une url à la liste (Elle sera implémenté plus tard)
+    /**
+     * !! THIS METHOD WILL BE USED IN LATER VERSIONS !!
+     * Add a URL to the list of URLs
+     * @param url String
+     */
     public void addUrl(String url) {
         ArrayList<String> urls = getUrls();
         urls.add(url);
         saveUrls(urls);
     }
 
+    /**
+     * !! THIS METHOD WILL BE USED IN LATER VERSIONS !!
+     * Remove a URL to the list of URLs
+     * @param name String
+     */
     public void removeUrl(String name) {
         ArrayList<String> urls = getUrls();
         urls.remove(name);
         saveUrls(urls);
     }
 
-    // --- Parameters ---
-
+    /**
+     * Get the parameters from SharedPreference
+     * @return Map<String, String>
+     */
     public Map<String, String> getParameters() {
         String json = prefs.getString(KEY_PARAMETERS, "{}");
         Type type = new TypeToken<Map<String, String>>(){}.getType();
         return gson.fromJson(json, type);
     }
 
+    /**
+     * Save the parameters in SharedPreference
+     * @param parameters Map<String, String>
+     */
     public void saveParameters(Map<String, String> parameters) {
         String json = gson.toJson(parameters);
         prefs.edit().putString(KEY_PARAMETERS, json).apply();
