@@ -6,7 +6,7 @@ An Android application designed to monitor the health status of various services
 # User guide
 
 ## Installation
-To get started, head over to the Releases menu on the right. Click on the latest version and scroll down to the "Assets" section to find the .apk file. Download this file to your phone, open it, and the application will install.
+To get started, on Github, head over to the Releases menu on the right. Click on the latest version and scroll down to the "Assets" section to find the .apk file. Download this file to your phone, open it, and the application will install.
 
 ## Main Menu
 When you open the app, you'll be greeted by a list of APIs and their current statuses. These APIs are automatically polled every 10 seconds.
