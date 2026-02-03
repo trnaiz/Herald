@@ -32,6 +32,6 @@
     <string name="options">Options</string>
     <string name="sort_by_name">Sort by name</string>
     <string name="sort_by_state">Sort by state</string>
-    <string name="still_no_network">Still no network...</string>
+    <string name="still_no_network">Still no network…</string>
     <string name="api_update">API states updated</string>
 </resources>
