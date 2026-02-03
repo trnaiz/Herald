@@ -34,4 +34,8 @@
     <string name="sort_by_state">Sort by state</string>
     <string name="still_no_network">Still no connectivity…</string>
     <string name="api_update">API states updated</string>
+    <string name="language">Language</string>
+    <string name="francais">Français</string>
+    <string name="english">English</string>
+    <string name="name">Creator : BleamX and Crocshu</string>
 </resources>

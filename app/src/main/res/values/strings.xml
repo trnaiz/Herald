@@ -33,5 +33,9 @@
     <string name="default_time">12:00:00</string>
     <string name="still_no_network">Toujours pas de réseau…</string>
     <string name="api_update">Statut des APIs actualisé</string>
+    <string name="language">Langue</string>
+    <string name="francais">Français</string>
+    <string name="english">English</string>
+    <string name="name">Createur : BleamX et Crocshu</string>
 
 </resources>

@@ -50,6 +50,8 @@ public class AppPreferences {
         saveUrls(defaultUrls);
 
         Map<String, String> defaultParams = new HashMap<>();
+        defaultParams.put("theme_mode", "-1");
+        defaultParams.put("lang", "");
         saveParameters(defaultParams);
     }
 
