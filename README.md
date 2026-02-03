@@ -11,8 +11,7 @@ To get started, head over to the Releases menu on the right. Click on the latest
 ## Main Menu
 When you open the app, you'll be greeted by a list of APIs and their current statuses. These APIs are automatically polled every 10 seconds.
 
-##
-Navigation & Controls
+## Navigation & Controls
 Auto-Refresh Bar: A loading bar in the top-left corner indicates when the next automatic update will occur.
 
 Manual Refresh: The button to the right of the loading bar allows you to trigger an update instantly.
@@ -21,10 +20,8 @@ Search (Magnifying Glass): This allows you to search for a specific service and 
 
 Settings (Gear Icon): Access the application settings to toggle between Light/Dark/System modes or change the language.
 
-##
-Service Details
+## Service Details
 By tapping on a specific service, a page will appear with more detailed information. You can return to the main menu by tapping the "X" in the top-right corner or by using your phone's standard back button/gesture.
 
-##
-Connectivity Issues
+## Connectivity Issues
 If you are not connected to the internet, a popup will appear to inform you. We recommend checking your connection and tapping "Retry" once you're back online.
