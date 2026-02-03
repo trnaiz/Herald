@@ -1,12 +1,12 @@
 package com.example.herald.view;
 
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 
 import com.example.herald.R;
 import com.example.herald.preferences.AppPreferences;
@@ -28,7 +28,34 @@ public class OptionsActivity extends AppCompatActivity {
         leaveButton = findViewById(R.id.leave_button);
         leaveButton.setOnClickListener(view -> finish());
 
+        setupLanguageRadio();
         setupThemeToggle();
+    }
+
+    private void setupLanguageRadio() {
+        RadioGroup radioGroup = findViewById(R.id.radioGroupLanguage);
+
+        Map<String, String> params = appPreferences.getParameters();
+        String savedLang = params.getOrDefault("lang", "fr");
+
+        if ("en".equals(savedLang)) {
+            radioGroup.check(R.id.radioEnglish);
+        } else {
+            radioGroup.check(R.id.radioFrench);
+        }
+
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            String lang = checkedId == R.id.radioEnglish ? "en" : "fr";
+
+            Map<String, String> currentParams = appPreferences.getParameters();
+            if (lang.equals(currentParams.getOrDefault("lang", "fr"))) return;
+
+            currentParams.put("lang", lang);
+            appPreferences.saveParameters(currentParams);
+
+            LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(lang);
+            AppCompatDelegate.setApplicationLocales(appLocale);
+        });
     }
 
     private void setupThemeToggle() {

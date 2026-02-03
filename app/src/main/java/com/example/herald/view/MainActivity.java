@@ -15,6 +15,7 @@ import android.content.Intent;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 
 import com.example.herald.preferences.AppPreferences;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        change_language();
+
         refreshButton = findViewById(R.id.refreshButton);
         searchButton = findViewById(R.id.searchButton);
         settingsButton = findViewById(R.id.settingsButton);
@@ -77,6 +80,21 @@ public class MainActivity extends AppCompatActivity {
         refreshButton.setOnClickListener(view -> refreshAllApi());
         searchButton.setOnClickListener(view -> showMenuSearch());
         settingsButton.setOnClickListener(view -> showOptionActivity());
+    }
+
+    /**
+     * Update the language according to the saved parameters
+     * Use /AppPreference to get the saved parameters
+     */
+    protected void change_language(){
+        String lang;
+        AppPreferences appPreferences = new AppPreferences(this);
+
+        Map<String, String> params = appPreferences.getParameters();
+        lang = params.getOrDefault("lang", "");
+
+        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(lang);
+        AppCompatDelegate.setApplicationLocales(appLocale);
     }
 
     /**
@@ -229,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (update_theme()) return;
+        change_language();
         if (!NetworkUtils.isNetworkAvailable(this)) {
             showNoConnectionDialog();
         }
