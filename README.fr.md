@@ -12,6 +12,8 @@ Pour commencer, dans Github, dirigez-vous vers le menu Releases sur la droite. C
 À l'ouverture de l'application, vous serez accueilli par une liste d'APIs et leurs statuts actuels. Ces APIs sont interrogées automatiquement toutes les 10 secondes.
 
 ## Navigation et Commandes
+![navbar](navbar.png)
+
 Barre d'actualisation automatique : Une barre de chargement en haut à gauche indique le moment où la prochaine mise à jour automatique aura lieu.
 
 Actualisation manuelle : Le bouton à droite de la barre de chargement vous permet de déclencher une mise à jour instantanée.
