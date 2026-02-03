@@ -12,6 +12,8 @@ To get started, on Github, head over to the Releases menu on the right. Click on
 When you open the app, you'll be greeted by a list of APIs and their current statuses. These APIs are automatically polled every 10 seconds.
 
 ## Navigation & Controls
+![navbar](navbar.png)
+
 Auto-Refresh Bar: A loading bar in the top-left corner indicates when the next automatic update will occur.
 
 Manual Refresh: The button to the right of the loading bar allows you to trigger an update instantly.
