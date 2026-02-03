@@ -6,7 +6,7 @@ Une application Android conçue pour surveiller l'état de santé (health status
 # Guide utilisateur
 
 ## Installation
-Pour commencer, dirigez-vous vers le menu Releases sur la droite. Cliquez sur la dernière version en date, puis faites défiler jusqu'à la section "Assets" pour trouver le fichier .apk. Téléchargez ce fichier sur votre téléphone, ouvrez-le, et l'application s'installera.
+Pour commencer, dans Github, dirigez-vous vers le menu Releases sur la droite. Cliquez sur la dernière version en date, puis faites défiler jusqu'à la section "Assets" pour trouver le fichier .apk. Téléchargez ce fichier sur votre téléphone, ouvrez-le, et l'application s'installera.
 
 ## Menu Principal
 À l'ouverture de l'application, vous serez accueilli par une liste d'APIs et leurs statuts actuels. Ces APIs sont interrogées automatiquement toutes les 10 secondes.
