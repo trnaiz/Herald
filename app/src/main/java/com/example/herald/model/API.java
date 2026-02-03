@@ -3,7 +3,6 @@ package com.example.herald.model;
 import android.net.Uri;
 
 import java.io.Serializable;
-import java.net.URL;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 

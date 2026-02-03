@@ -1,22 +1,15 @@
 package com.example.herald.view;
 
-import android.app.Activity;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.herald.R;
 import com.example.herald.model.API;
-import com.example.herald.model.Indicator;
 
 public class DetailActivity extends AppCompatActivity {
     private ImageView apiIcon;

@@ -1,8 +1,6 @@
 package com.example.herald.view;
 
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
