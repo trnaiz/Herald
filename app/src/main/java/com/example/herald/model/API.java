@@ -3,10 +3,12 @@ package com.example.herald.model;
 import android.net.Uri;
 
 import java.io.Serializable;
+import java.net.URL;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class API implements Serializable {
+    private String shortUrl;
     private String urlIcon;
     private String name;
     private String updatedAt;
@@ -17,6 +19,7 @@ public class API implements Serializable {
     public API (String url){
         this.url = url;
         this.urlIcon = String.format("https://www.google.com/s2/favicons?domain=%s&sz=256", Uri.parse(this.url).getHost());
+        this.shortUrl = "https://" + Uri.parse(this.url).getHost();
     }
 
     public String getDescription() {
@@ -73,5 +76,13 @@ public class API implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getShortUrl() {
+        return shortUrl;
+    }
+
+    public void setShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
     }
 }

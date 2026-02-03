@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Herald</string>
-    <string name="title_no_connexion">Ouch !</string>
-    <string name="first_line_no_connexion">It seem like you are not connected to internet</string>
-    <string name="second_line_no_connexion">Please check you internet connection</string>
+    <string name="title_no_connection">Oops!</string>
+    <string name="first_line_no_connection">It seems like you are not connected to Internet</string>
+    <string name="second_line_no_connection">Please check your Internet connection</string>
     <string name="retry">Retry</string>
     <string name="name_api">API NAME</string>
     <string name="state">State</string>
@@ -17,12 +17,12 @@
     <string name="health_link">Link health</string>
     <string name="icon_text">Icon</string>
     <string name="quit">Quit</string>
-    <string name="no_connexion">no_connexion</string>
+    <string name="no_connection">no_connection</string>
     <string name="refresh_button">refresh_Button</string>
-    <string name="search">research</string>
+    <string name="search">Search</string>
     <string name="parameters">parameters</string>
-    <string name="in_progress">Heral is still in developmen</string>
-    <string name="Website_name">Website name</string>
+    <string name="in_progress">Herald is still in development</string>
+    <string name="website_name">Website name</string>
     <string name="default_date">01/01/2025</string>
     <string name="default_time">12:00:00</string>
     <string name="auto">Auto</string>
@@ -32,6 +32,6 @@
     <string name="options">Options</string>
     <string name="sort_by_name">Sort by name</string>
     <string name="sort_by_state">Sort by state</string>
-    <string name="still_no_network">Still no network…</string>
+    <string name="still_no_network">Still no connectivity…</string>
     <string name="api_update">API states updated</string>
 </resources>

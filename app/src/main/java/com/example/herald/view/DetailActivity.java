@@ -61,7 +61,7 @@ public class DetailActivity extends AppCompatActivity {
         updateHour.setText(this.api.getUpdateTime());
 
         healthLink = findViewById(R.id.health_link);
-        healthLink.setText(this.api.getUrl());
+        healthLink.setText(this.api.getShortUrl());
 
         leaveButton = findViewById(R.id.leave_button);
         leaveButton.setOnClickListener(view -> finish());
