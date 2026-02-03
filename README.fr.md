@@ -1,22 +1,27 @@
+[English version](README.md)
+
 # Herald
-Application Android ayant comme but de suivre les statuts de santé d'une liste de services.
+Une application Android conçue pour surveiller l'état de santé (health status) de divers services.
 
 # Guide utilisateur
 
 ## Installation
-Pour profiter de cette application, veuillez vous diriger dans le menu "Releases" à droite. Ici, vous pourrez cliquer sur la dernière version. Tout en bas de cette version se trouve des pièces-jointes, avec une version de l'application sous format .apk. Installez ce fichier sur votre téléphone, exécutez-le et l'application s'installera.
+Pour commencer, dirigez-vous vers le menu Releases sur la droite. Cliquez sur la dernière version en date, puis faites défiler jusqu'à la section "Assets" pour trouver le fichier .apk. Téléchargez ce fichier sur votre téléphone, ouvrez-le, et l'application s'installera.
 
-## Menu principal
-En ouvrant l'application, vous serez accueilli dans un menu avec une liste d'APIs et leur statut.
-Ces APIs sont interrogées toutes les 10 secondes.
+## Menu Principal
+À l'ouverture de l'application, vous serez accueilli par une liste d'APIs et leurs statuts actuels. Ces APIs sont interrogées automatiquement toutes les 10 secondes.
 
-## Bouton de navigation
-Une barre de chargement en haut à droite vous indique la prochaine interrogation automatique. Le bouton à sa gauche permet de déclencher une actualisation.
-Le bouton "loupe" vous permet de rechercher un service en particulier, ainsi que de trier l'affichage des APIs par nom ou par statut.
-Le bouton "engrenage" donne accès aux différents paramètres de l'application, comme le passage au mode clair/sombre/automatique ou bien le choix de la langue.
+## Navigation et Commandes
+Barre d'actualisation automatique : Une barre de chargement en haut à gauche indique le moment où la prochaine mise à jour automatique aura lieu.
 
-## Clic sur un service
-Lors du clic sur un service, une page apparaît, vous indiquant davantage de détails concernant le service concerné. La croix en haut à droite vous permet de retourner sur le menu principal. Faire "retour" avec les touches en bas de l'écran ou le geste a le même effet.
+Actualisation manuelle : Le bouton à droite de la barre de chargement vous permet de déclencher une mise à jour instantanée.
 
-## Pas de connexion
-Lorsque vous n'avez pas de connectivité à Internet, une popup apparaît vous l'indiquant. Il est alors conseillé de vérifier votre connectivité et de réessayer d'utiliser l'application après avoir appuyé sur "Réessayer".
+Recherche (Loupe) : Cet outil vous permet de rechercher un service spécifique et de trier la liste par nom ou par statut.
+
+Paramètres (Roue dentée) : Accédez aux réglages de l'application pour basculer entre les modes Clair/Sombre/Système ou pour changer la langue.
+
+## Détails du service
+En appuyant sur un service spécifique, une page s'affichera avec des informations plus détaillées. Vous pouvez revenir au menu principal en appuyant sur la croix "X" en haut à droite ou en utilisant le bouton/geste de retour standard de votre téléphone.
+
+## Problèmes de connexion
+Si vous n'êtes pas connecté à Internet, une fenêtre contextuelle (popup) apparaîtra pour vous en informer. Nous vous recommandons de vérifier votre connexion et d'appuyer sur "Réessayer" une fois la connectivité rétablie.
